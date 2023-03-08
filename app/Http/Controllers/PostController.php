@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DetailPostResource;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -10,8 +11,13 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function index() {
-        $post = Post::all();
+        $posts = Post::all();
        // return response()->json(['data' => $post]);
-       return PostResource::collection($post);
+       return PostResource::collection($posts);
+    }
+
+    public function show($id) {
+        $post = Post::findOrFail($id);
+        return new DetailPostResource($post);
     }
 }
