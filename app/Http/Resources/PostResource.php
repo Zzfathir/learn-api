@@ -19,6 +19,11 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'news_content'=> $this->news_content,
+            'author_id'=> $this->author,
+            'comments_total'=> $this->whenLoaded('comments', function() {
+                return count($this->comments);
+            }),
+            'writer'=> $this->writer,
             'created_at'=> $this->created_at,
         ];
     }
